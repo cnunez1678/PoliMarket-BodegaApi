@@ -1,32 +1,35 @@
-
 using Microsoft.EntityFrameworkCore;
-using BodegaApi.Data;
-using BodegaApi.Repositories;
-using BodegaApi.Services;
-using BodegaApi.Models;
-using BodegaApi.Dtos;
+using PoliMarket.Bodega.Api.Data;
+using PoliMarket.Bodega.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5000");
-builder.Services.AddDbContext<BodegaContext>(opt => opt.UseInMemoryDatabase("BodegaDB"));
+// Add services
+builder.Services.AddDbContext<WarehouseDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=bodega.db"));
 
-builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
-builder.Services.AddScoped<IProveedorRepository, ProveedorRepository>();
-builder.Services.AddScoped<IProductoService, ProductoService>();
-
-builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IBodegaService, BodegaService>();
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
+// Ensure database
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<WarehouseDbContext>();
+    db.Database.EnsureCreated();
+    DbSeeder.Seed(db);
+}
+
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapGet("/api/productos", async (IProductoRepository repo) => await repo.GetAllAsync());
-app.MapPost("/api/productos", async (ProductoCreateDto dto, IProductoService service) => Results.Ok(await service.CreateAsync(dto)));
-
+app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
