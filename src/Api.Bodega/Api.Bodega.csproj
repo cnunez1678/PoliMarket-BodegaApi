@@ -10,8 +10,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Warehouse.Application\Warehouse.Application.csproj" />
-    <ProjectReference Include="..\Warehouse.Infrastructure\Warehouse.Infrastructure.csproj" />
-    <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj" />
+    <ProjectReference Include="..\Aplicacion.Bodega\Aplicacion.Bodega.csproj" />
+    <ProjectReference Include="..\Infraestructura.Bodega\Infraestructura.Bodega.csproj" />
+    <ProjectReference Include="..\Dominio.Bodega\Dominio.Bodega.csproj" />
   </ItemGroup>
 </Project>

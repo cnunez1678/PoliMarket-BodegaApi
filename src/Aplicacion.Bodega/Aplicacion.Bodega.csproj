@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj" />
+    <ProjectReference Include="..\Dominio.Bodega\Dominio.Bodega.csproj" />
+    <ProjectReference Include="..\Infraestructura.Bodega\Infraestructura.Bodega.csproj" />
   </ItemGroup>
 </Project>

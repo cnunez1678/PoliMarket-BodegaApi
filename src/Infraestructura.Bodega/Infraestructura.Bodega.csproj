@@ -9,6 +9,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Warehouse.Domain\Warehouse.Domain.csproj" />
+    <ProjectReference Include="..\Dominio.Bodega\Dominio.Bodega.csproj" />
   </ItemGroup>
 </Project>
